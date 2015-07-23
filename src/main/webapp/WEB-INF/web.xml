@@ -5,19 +5,16 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
 	<display-name>Archetype Created Web Application</display-name>
+	<welcome-file-list>
+		index.jsp
+	</welcome-file-list>
 	<!-- - Location of the XML file that defines the root application context 
 		- Applied by ContextLoaderListener. -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:applicationContext-business.xml
 			/WEB-INF/applicationContext-security.xml
 		</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>webAppRootKey</param-name>
-		<param-value>app1</param-value>
 	</context-param>
 
 	<filter>
@@ -51,7 +48,7 @@
 
 	<servlet-mapping>
 		<servlet-name>bank</servlet-name>
-		<url-pattern>*.html</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
