@@ -9,7 +9,7 @@
 <a href="${contextPath}/">Home</a>
 
 <h3>
-    Illegal action.
+    Something wrong..
 </h3>
 
 <div class="alert alert-danger">

@@ -12,11 +12,11 @@
                         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
                         http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd">
 
-	<http pattern="/pic/**" create-session="never"
+	<http pattern="/resource/**" create-session="never"
 		entry-point-ref="oauth2AuthenticationEntryPoint"
 		access-decision-manager-ref="oauth2AccessDecisionManager">
 		<anonymous enabled="false" />
-		<intercept-url pattern="/pic/**" access="ROLE_USER,SCOPE_READ" />
+		<intercept-url pattern="/resource/**" access="ROLE_USER,SCOPE_READ" />
 		<custom-filter ref="picResourceServer" before="PRE_AUTH_FILTER" />
 		<access-denied-handler ref="oauthAccessDeniedHandler" />
 	</http>

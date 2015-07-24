@@ -41,18 +41,11 @@
 			<artifactId>spring-security-web</artifactId>
 			<version>3.2.6.RELEASE</version>
 		</dependency>
-		<!-- -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>3.2.6.RELEASE</version>
 		</dependency>
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-cas</artifactId>

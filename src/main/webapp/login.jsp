@@ -23,7 +23,8 @@
 				<td><input type='password' name='j_password' /></td>
 			</tr>
 			<tr>
-				<td colspan='2'><input name="submit" type="submit" value="Login" /></td>
+				<td colspan='2'><input name="submit" type="submit"
+					value="Login" /></td>
 			</tr>
 		</table>
 	</form>
@@ -35,10 +36,12 @@
 	%>
 	<p>The current user is</p>
 	<%
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	if(auth == null)
-		out.print("null");
-	else
-		out.print(auth.getName());%>
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth == null)
+			out.print("null");
+		else
+			out.print(auth.getName());
+	%>
+	<p>Default UserName/Password: admin/admin</p>
 </body>
 </html>
