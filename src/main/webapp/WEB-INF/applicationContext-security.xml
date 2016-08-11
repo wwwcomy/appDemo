@@ -16,7 +16,8 @@
 		entry-point-ref="oauth2AuthenticationEntryPoint"
 		access-decision-manager-ref="oauth2AccessDecisionManager">
 		<anonymous enabled="false" />
-		<intercept-url pattern="/resource/**" access="ROLE_USER,SCOPE_READ" />
+		<intercept-url pattern="/resource/getUserInfo" access="ROLE_USER,SCOPE_READ" />
+		<intercept-url pattern="/resource/getUserInfo2" access="SCOPE_READ" />
 		<custom-filter ref="picResourceServer" before="PRE_AUTH_FILTER" />
 		<access-denied-handler ref="oauthAccessDeniedHandler" />
 	</http>
@@ -25,6 +26,7 @@
 	<oauth2:resource-server id="picResourceServer"
 		resource-id="pic-resource" token-services-ref="tokenServices" />
 
+	<!-- The service is avaiable at:TokenEndpoint -->
 	<http pattern="/oauth/token" create-session="stateless"
 		authentication-manager-ref="clientAuthenticationManager"
 		entry-point-ref="oauth2AuthenticationEntryPoint">
@@ -79,7 +81,7 @@
 
 	<oauth2:client-details-service id="clientDetailsService">
 		<oauth2:client client-id="m1"
-			authorized-grant-types="password,authorization_code,refresh_token,implicit"
+			authorized-grant-types="password,authorization_code,refresh_token,implicit,client_credentials"
 			secret="s1" scope="read,write,trust" authorities="ROLE_CLIENT, ROLE_TRUSTED_CLIENT"
 			resource-ids="pic-resource" />
 	</oauth2:client-details-service>

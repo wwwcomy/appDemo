@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ResourceController {
 	@RequestMapping("/getUserInfo")
 	public String getUserInfo() {
-		return "resource";
+		return "resource1";
+	}
+	
+	@RequestMapping("/getUserInfo2")
+	public String getUserInfo2() {
+		return "resource2";
 	}
 }

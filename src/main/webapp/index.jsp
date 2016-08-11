@@ -35,6 +35,9 @@
 	12. Client可以使用这个access token去访问被保护的资源：
 	http://localhost:8080/appDemo/resource/getUserInfo?access_token=68df2aed-a84d-4f8e-b3d6-2520c4c6222e
 	13. 可以尝试把access token去掉或者删掉两位，都是访问不了的。
+	14. 更新了一种获取access token的方式：Client Credentials, 通过POST到以下URL:http://localhost:8080/appDemo/oauth/token?grant_type=client_credentials，在HTTP header中加入
+		用户名密码，即可获取Access Token,
+		同时加入了一个API专门用于Client Credential这种方式的调用，因为没有经过用户的认证，所以这个token里面是没有Role_User这个权限的
 	</pre>
 
 </body>
