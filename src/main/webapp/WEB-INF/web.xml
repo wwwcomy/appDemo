@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
 	id="appDemo" version="3.1">
 	<display-name>Archetype Created Web Application</display-name>
 	<!-- - Location of the XML file that defines the root application context 
@@ -16,13 +16,15 @@
 
 	<!-- Loads the root application context of this web app at startup. -->
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener
+		</listener-class>
 	</listener>
 
-	<!-- Provides core MVC application controller. See bank-servlet.xml. -->
+	<!-- Provides core MVC application controller. -->
 	<servlet>
 		<servlet-name>springMVC</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:applicationContext-mvc.xml</param-value>
@@ -33,6 +35,25 @@
 	<servlet-mapping>
 		<servlet-name>springMVC</servlet-name>
 		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- Provides core MVC application controller. -->
+	<servlet>
+		<servlet-name>springWebsocket</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<!-- <param-value>com.iteye.wwwcomy.websocket.config.WebSocketConfig
+			</param-value> -->
+			<param-value>classpath:applicationContext-websocket.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>springWebsocket</servlet-name>
+		<url-pattern>/websocket/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>
