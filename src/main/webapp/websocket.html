@@ -42,7 +42,7 @@ body {
 			setConnected(true);
 			console.log('Connected: ' + frame);
 			stompClient.subscribe('/topic/greetings', function(greeting) {
-				showGreeting(JSON.parse(greeting.body).content);
+				showGreeting(JSON.parse(greeting.body).name);
 			});
 		});
 	}
@@ -56,7 +56,7 @@ body {
 	}
 
 	function sendName() {
-		stompClient.send("/app/hello", {}, 1);
+		stompClient.send("/app/hello", {}, $("#name").val());
 	}
 
 	function showGreeting(message) {
