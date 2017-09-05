@@ -89,11 +89,17 @@
 	<beans:bean id="tokenServices"
 		class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
 		<beans:property name="tokenStore" ref="tokenStore" />
+		<beans:property name="tokenEnhancer" ref="jwtAccessTokenConvert" />
 		<beans:property name="supportRefreshToken" value="true" />
 		<beans:property name="clientDetailsService" ref="clientDetailsService" />
 	</beans:bean>
 	<beans:bean id="tokenStore"
-		class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore">
+		class="org.springframework.security.oauth2.provider.token.store.JwtTokenStore">
+		<beans:constructor-arg ref="jwtAccessTokenConvert"/>
+	</beans:bean>
+
+	<beans:bean id="jwtAccessTokenConvert"
+		class="org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter">
 	</beans:bean>
 
 	<oauth2:authorization-server
