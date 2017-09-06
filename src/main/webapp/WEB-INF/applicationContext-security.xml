@@ -53,7 +53,8 @@
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
 			<user-service id="userService">
-				<user name="admin" password="admin" authorities="ROLE_USER" />
+				<user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN" />
+				<user name="user1" password="user1" authorities="ROLE_USER" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
