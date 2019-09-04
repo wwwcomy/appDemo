@@ -2,3 +2,8 @@
 /.classpath
 /.project
 /.settings/
+/appdemo-auth-service/target/
+/appdemo-auth-service/.classpath
+/appdemo-auth-service/.project
+/appdemo-auth-service/.settings/
+/appdemo-auth-service/.gitignore
