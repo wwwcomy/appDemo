@@ -38,10 +38,16 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/test/**", "/login", "/logout").permitAll().anyRequest().authenticated()
+//		http.authorizeRequests().antMatchers("/test/**", "/login", "/logout").permitAll().anyRequest().authenticated()
 				// 其他地址的访问均需验证权限
-				.and().apply(new DefaultLoginPageConfigurer<>());
+//				.and().apply(new DefaultLoginPageConfigurer<>());
 		// .loginPage("/login").and().logout().logoutSuccessUrl("/");
+		http
+		  .formLogin().loginPage("/login").permitAll()
+		  .and()
+		  .requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/confirm_access")
+		  .and()
+		  .authorizeRequests().anyRequest().authenticated();
 	}
 
 	@Override

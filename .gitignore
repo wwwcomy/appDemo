@@ -7,3 +7,8 @@
 /appdemo-auth-service/.project
 /appdemo-auth-service/.settings/
 /appdemo-auth-service/.gitignore
+/appdemo-oauth-client/target/
+/appdemo-oauth-client/.classpath
+/appdemo-oauth-client/.project
+/appdemo-oauth-client/.settings/
+/appdemo-oauth-client/.gitignore
