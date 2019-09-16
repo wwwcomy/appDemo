@@ -1,2 +1,14 @@
 server:
-    port: 8089
+  port: 8089
+security:
+  oauth2:
+    client:
+      clientId: m1
+      clientSecret: s1
+#Token exchange URL:
+      accessTokenUri: http://localhost:9999/idm/oauth/token
+#Authorize page URL:
+      userAuthorizationUri: http://localhost:9999/idm/oauth/authorize
+      tokenName: access_token
+#Get User Information URL:
+      userInfoUri: http://localhost:9999/idm/user
