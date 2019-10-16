@@ -1,1 +1,71 @@
-Hello World, This is index.html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Demo</title>
+<meta name="description" content="" />
+<base href="/" />
+</head>
+<body>
+	<h1>Demo</h1>
+	<div id="notLogin" class="container">
+		Login with: <a href="/login">Auth-Service</a>
+	</div>
+	<div id="loggedIn" class="container">
+		Logged in as:<span id="userInfo"></span>
+		<div>
+			<button id="logoutBtn">Logout</button>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+	if (window.fetch) {
+		fetch("/user", {
+			method : 'GET',
+			redirect : 'error',
+			credentials : 'same-origin',
+			headers : {
+				'ACCEPT' : 'application/json, text/plain'
+			}
+		}).then(function(response) {
+	        if (!response.ok) {
+		    	console.log(response);
+	            throw new Error(response.status);
+	        }
+	        return response;
+	    }).then(function(response) {
+	    	response.json().then(function(data) {
+				$("#userInfo").html(data.name + "");
+			});
+			console.log(response);
+			$("#notLogin").hide();
+			$("#loggedIn").show();
+	    }).catch(function(e) {
+	    	console.log(e);
+			$("#loggedIn").hide();
+			$("#notLogin").show();
+	    });
+		$("#logoutBtn").click(function() {
+			fetch("/logout", {
+				method : 'POST',
+				redirect : 'follow',
+				credentials : 'same-origin',
+				headers : {
+					'X-XSRF-TOKEN' : $.cookie()['XSRF-TOKEN']
+				}
+			}).then(function(response) {
+				$("#loggedIn").hide();
+				$("#notLogin").show();
+			}, function(e) {
+				$("#notLogin").hide();
+				$("#loggedIn").show();
+			})
+		})
+	} else {
+		alert("fetch not supported")
+	}
+</script>
+</html>
