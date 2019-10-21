@@ -3,24 +3,18 @@ package com.iteye.wwwcomy.appdemo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.DefaultLoginPageConfigurer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
 @SpringBootApplication
 @EnableAuthorizationServer
-@EnableResourceServer
 @EnableWebSecurity
 public class AppdemoApplication {
 
@@ -30,35 +24,31 @@ public class AppdemoApplication {
 
 }
 
-//@Configuration
-//class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-//}
 @Configuration
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+}
+
+@Configuration
+class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
+
+//	@Autowired
+//	AuthenticationManager manager;
+
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-//		http.authorizeRequests().antMatchers("/test/**", "/login", "/logout").permitAll().anyRequest().authenticated()
-				// 其他地址的访问均需验证权限
-//				.and().apply(new DefaultLoginPageConfigurer<>());
-		// .loginPage("/login").and().logout().logoutSuccessUrl("/");
-		http
-		  .formLogin().loginPage("/login").permitAll()
-		  .and()
-		  .requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/confirm_access")
-		  .and()
-		  .authorizeRequests().anyRequest().authenticated();
+	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+		clients.inMemory().withClient("m1").secret("{noop}s1")
+				.authorizedGrantTypes("authorization_code", "refresh_token", "password", "client_credentials")
+				.scopes("openid").redirectUris("http://wwwcomy.com:8080/login").autoApprove(true);
 	}
 
 	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/assets/**");
+	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+		oauthServer.allowFormAuthenticationForClients();
 	}
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManager() throws Exception {
-		return super.authenticationManager();
-	}
-
+//	@Override
+//	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+//		endpoints.authenticationManager(manager);
+//	}
 }
