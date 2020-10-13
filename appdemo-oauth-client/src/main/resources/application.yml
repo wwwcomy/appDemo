@@ -6,8 +6,8 @@ security:
     client:
       clientId: m1
       clientSecret: s1
-      accessTokenUri: http://localhost:9999/idm/oauth/token
-      userAuthorizationUri: http://localhost:9999/idm/oauth/authorize
+      accessTokenUri: http://localhost:9999/oauth/token
+      userAuthorizationUri: http://localhost:9999/oauth/authorize
       tokenName: access_token
     resource:
-      userInfoUri: http://localhost:9999/idm/user
+      userInfoUri: http://localhost:9999/user
