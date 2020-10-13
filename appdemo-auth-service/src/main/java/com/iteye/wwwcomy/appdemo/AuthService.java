@@ -9,11 +9,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 @SpringBootApplication
 @EnableAuthorizationServer
 @EnableWebSecurity
+@EnableResourceServer
 public class AuthService {
 
 	public static void main(String[] args) {
@@ -56,13 +60,33 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 }
 
 @Configuration
+class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+
+	@Override
+	public void configure(ResourceServerSecurityConfigurer resources) {
+		resources.resourceId("USERS");
+	}
+
+	@Override
+	public void configure(HttpSecurity http) throws Exception {
+		http
+		// Since we want the protected resources to be accessible in the UI as well we
+		// need
+//				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
+				.requestMatchers().antMatchers("/api/**").and().authorizeRequests()
+//                .antMatchers("/product/**").access("#oauth2.hasScope('select') and hasRole('ROLE_USER')")
+				.antMatchers("/user").authenticated();
+	}
+}
+
+@Configuration
 class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory().withClient("m1").secret("{noop}s1")
 				.authorizedGrantTypes("authorization_code", "refresh_token", "password", "client_credentials")
-				.scopes("openid").redirectUris("http://wwwcomy.com:8080/login").autoApprove(true);
+				.scopes("openid").redirectUris("http://localhost:8089/login").autoApprove(true);
 	}
 
 	@Override

@@ -10,4 +10,4 @@ security:
       userAuthorizationUri: http://localhost:9999/oauth/authorize
       tokenName: access_token
     resource:
-      userInfoUri: http://localhost:9999/user
+      userInfoUri: http://localhost:9999/api/user
