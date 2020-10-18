@@ -12,3 +12,8 @@
 /appdemo-oauth-client/.project
 /appdemo-oauth-client/.settings/
 /appdemo-oauth-client/.gitignore
+/appdemo-resource-service1/target/
+/appdemo-resource-service1/.classpath
+/appdemo-resource-service1/.project
+/appdemo-resource-service1/.settings/
+/appdemo-resource-service1/.gitignore

@@ -73,9 +73,11 @@ class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 		// Since we want the protected resources to be accessible in the UI as well we
 		// need
 //				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
-				.requestMatchers().antMatchers("/api/**").and().authorizeRequests()
+				.requestMatchers().antMatchers("/api/**")
+				.and()
+				.authorizeRequests()
 //                .antMatchers("/product/**").access("#oauth2.hasScope('select') and hasRole('ROLE_USER')")
-				.antMatchers("/user").authenticated();
+				.anyRequest().authenticated();
 	}
 }
 
