@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -66,12 +67,6 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and().csrf().disable();
 	}
 
-//	@Override
-//	@Bean
-//	public AuthenticationManager authenticationManagerBean() throws Exception {
-//		return super.authenticationManagerBean();
-//	}
-
 }
 
 @Configuration
@@ -85,12 +80,12 @@ class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 				//
 				.and().withClient("m2").secret("{noop}s2")
 				.authorizedGrantTypes("authorization_code", "refresh_token", "password", "client_credentials")
-				.scopes("openid").redirectUris("http://wwwcomy:8090/login").autoApprove(true);
+				.scopes("openid").redirectUris("http://wwwcomy:8090/").autoApprove(true)
+				//
+				.and().withClient("m3").secret("{noop}s3")
+				.authorizedGrantTypes("authorization_code", "refresh_token", "password", "client_credentials")
+				.scopes("openid").redirectUris("http://localhost:9998/login").autoApprove(true);
 	}
-
-//	@Autowired
-//	@Qualifier("authenticationManagerBean")
-//	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private ClientDetailsService clientDetailsService;
@@ -130,7 +125,6 @@ class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.tokenServices(tokenServices())
 		// .tokenStore(tokenStore())
-//		.authenticationManager(authenticationManager)
 		;
 	}
 
