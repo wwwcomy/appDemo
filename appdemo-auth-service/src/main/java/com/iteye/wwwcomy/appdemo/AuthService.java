@@ -91,15 +91,16 @@ class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory().withClient("m1").secret("{noop}s1")
 				.authorizedGrantTypes("authorization_code", "refresh_token", "password", "client_credentials")
-				.scopes("openid").redirectUris("http://localhost:8089/login").autoApprove(true)
+				.scopes("test_scope1").redirectUris("http://localhost:8089/login").autoApprove(true)
 				//
 				.and().withClient("m2").secret("{noop}s2")
 				.authorizedGrantTypes("authorization_code", "refresh_token", "password", "client_credentials")
-				.scopes("openid").redirectUris("http://wwwcomy:8090/").autoApprove(true)
-				//
+				.scopes("test_scope2").redirectUris("http://wwwcomy-pc:8090/login/oauth2/code/test").autoApprove(true)
+				// the scope openid is for OIDC, there's special configuration needed in
+				// OidcAuthorizationCodeAuthenticationProvider (ID Token needed)
 				.and().withClient("m3").secret("{noop}s3")
 				.authorizedGrantTypes("authorization_code", "refresh_token", "password", "client_credentials")
-				.scopes("openid").redirectUris("http://localhost:9998/login").autoApprove(true);
+				.scopes("test_scope3").redirectUris("http://localhost:9998/login").autoApprove(true);
 	}
 
 	@Autowired

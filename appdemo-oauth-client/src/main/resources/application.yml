@@ -1,13 +1,32 @@
 server:
-  port: 8089
+  port: 8090
 
-security:
-  oauth2:
-    client:
-      clientId: m1
-      clientSecret: s1
-      accessTokenUri: http://localhost:9999/oauth/token
-      userAuthorizationUri: http://localhost:9999/oauth/authorize
-      tokenName: access_token
-    resource:
-      userInfoUri: http://localhost:9999/api/user
+logging:
+  level:
+    root: DEBUG
+#    org.springframework.web: INFO
+#    org.springframework.security: DEBUG
+#    org.springframework.boot.autoconfigure: DEBUG
+
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          test:
+            client-id: m2
+            client-secret: s2
+            authorization-grant-type: authorization_code
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope: test_scope2
+            #client-name: test
+            #client-alias: test
+        provider:
+          test:
+            authorization-uri: http://localhost:9999/oauth/authorize
+            token-uri: http://localhost:9999/oauth/token
+            user-info-uri: http://localhost:9999/api/user
+            jwk-set-uri: http://localhost:9999/oauth/token_key
+            user-name-attribute: name

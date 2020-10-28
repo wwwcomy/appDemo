@@ -5,11 +5,9 @@ import javax.servlet.ServletException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 
 @SpringBootApplication
-@EnableOAuth2Sso
 public class OAuthClientApplication implements ServletContextInitializer {
 
 	public static void main(String[] args) {
