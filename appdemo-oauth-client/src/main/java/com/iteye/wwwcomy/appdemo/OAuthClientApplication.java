@@ -7,6 +7,33 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 
+/**
+ * This is the OAuth2 SSO example, notice that there's no JAVA configuration,
+ * ALL configuration is done in application.yml.
+ * 
+ * The flow is:
+ * 
+ * 1. Visit OAuth client (that is this service) at http://wwwcomy-pc:8090/
+ * 
+ * 2. This service will let user choose which registered identity provider to
+ * use. As there's only one with ID "test" in application.yml, user will be
+ * redirected to authorization server. (Done in
+ * OAuth2AuthorizationRequestRedirectFilter)
+ * 
+ * 3. User login to AUTH server successfully and then redirect back to client as
+ * "{baseUrl}/login/oauth2/code/{registrationId}", with code and state in the
+ * request URL
+ * 
+ * 4. Client will use the code in step 3 to switch for token and retrieve user
+ * information. This is done in OAuth2LoginAuthenticationFilter
+ * 
+ * 5. Also in OAuth2LoginAuthenticationFilter, the original target URL will be
+ * loaded and user will be redirected to that page with proper authenticated
+ * context.
+ * 
+ * @author xingnliu
+ *
+ */
 @SpringBootApplication
 public class OAuthClientApplication implements ServletContextInitializer {
 
