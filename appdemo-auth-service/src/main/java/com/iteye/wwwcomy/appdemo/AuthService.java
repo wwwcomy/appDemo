@@ -1,5 +1,8 @@
 package com.iteye.wwwcomy.appdemo;
 
+import java.security.KeyPair;
+import java.security.interfaces.RSAPublicKey;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,6 +27,11 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.KeyUse;
+import com.nimbusds.jose.jwk.RSAKey;
 
 @SpringBootApplication
 @EnableAuthorizationServer
@@ -64,8 +72,10 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.formLogin()
 				// .loginPage("/login") // This is for custom login page, although it is the
 				// same URL with the out-of-box login page
-				.permitAll().and().authorizeRequests().antMatchers("/login*").permitAll().anyRequest().authenticated()
-				.and().csrf().disable();
+				.and().authorizeRequests().antMatchers("/login*", "/oauth/token_key", "/.well-known/jwks.json")
+				.permitAll()
+				//
+				.anyRequest().authenticated().and().csrf().disable();
 	}
 
 }
@@ -126,16 +136,30 @@ class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 	@Bean
 	public JwtAccessTokenConverter jwtTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+		converter.setKeyPair(keyPair());
+		return converter;
+	}
+
+	@Bean
+	public JWKSet jwkSet() {
+		RSAKey.Builder builder = new RSAKey.Builder((RSAPublicKey) keyPair().getPublic()).keyUse(KeyUse.SIGNATURE)
+				.algorithm(JWSAlgorithm.RS256).keyID("test-id");
+		return new JWKSet(builder.build());
+	}
+
+	@Bean
+	public KeyPair keyPair() {
 		KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mytest.jks"),
 				"passwd".toCharArray());
-		converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest"));
-		return converter;
+		return keyStoreKeyFactory.getKeyPair("mytest");
 	}
 
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-		oauthServer.allowFormAuthenticationForClients();
-//		oauthServer.allowFormAuthenticationForClients().tokenKeyAccess("permitAll()").checkTokenAccess("permitAll()");
+//		oauthServer.allowFormAuthenticationForClients();
+		oauthServer.allowFormAuthenticationForClients().tokenKeyAccess("permitAll()")
+		// .checkTokenAccess("permitAll()")
+		;
 	}
 
 	@Override
