@@ -1,7 +1,7 @@
 # appDemo
 app demo for spring mvc + spring security
 
-The Spring Security OAuth2 demo is on the "OAuth2" branch. Tutorial can be found at: http://wwwcomy.iteye.com/blog/2230265
+The Spring Security OAuth2 demo is on the "OAuth2" branch. Tutorial can be found at: [http://wwwcomy.iteye.com/blog/2230265](https://blog.csdn.net/wwwcomy/article/details/84734497)
 
 The master branch is for Spring Boot2 + Spring Security 5 to implement OAuth2 demo.
 
